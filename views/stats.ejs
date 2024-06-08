@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stats</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Stats</h1>
+        <ul>
+            <li>Total Emails: <%= totalEmails %></li>
+            <li>Active Emails: <%= activeEmails %></li>
+            <li>Inactive Emails: <%= inactiveEmails %></li>
+            <li><a href="/status/sold">Sold Emails</a>: <%= soldEmails %></li>
+            <li><a href="/status/not sold">Not Sold Emails</a>: <%= notSoldEmails %></li>
+        </ul>
+        <h2>Emails by Year</h2>
+        <ul>
+            <% for (const year in years) { %>
+                <li><a href="/stats/<%= year %>"><%= year %> (<%= years[year] %>)</a></li>
+            <% } %>
+        </ul>
+    </div>
+</body>
+</html>

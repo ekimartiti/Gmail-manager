@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gmail Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/scripts.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gmail Manager</h1>
+        <nav>
+            <a href="/add">Add Email</a>
+            <a href="/stats">View Stats</a>
+            <form action="/search" method="get">
+                <input type="text" name="q" placeholder="Search emails..." value="<%= searchQuery || '' %>">
+                <button type="submit">Search</button>
+            </form>
+        </nav>
+        <ul class="email-list">
+            <% if (emails.length > 0) { %>
+                <% emails.forEach(email => { %>
+                    <li class="email-item">
+                        <div><strong>Email:</strong> <%= email.email %></div>
+                        <div><strong>Password:</strong> <%= email.password %></div>
+                        <div><strong>Status:</strong> <%= email.activeStatus %>, <%= email.soldStatus %></div>
+                        <div><strong>Created At:</strong> <%= email.createdAt %></div>
+                        <div><strong>EK Status:</strong> <%= email.ekStatus %></div>
+                        <a href="/edit/<%= email.email %>">Edit</a>
+                        <form action="/delete/<%= email.email %>" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </li>
+                <% }) %>
+            <% } else { %>
+                <li class="email-item">
+                    <div>No emails found.</div>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</body>
+</html>
