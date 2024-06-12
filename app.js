@@ -72,7 +72,7 @@ app.get('/logout', (req, res) => {
 
 // Protected routes
 app.get('/', isAuthenticated, async (req, res) => {
-    const emails = await Email.find();
+    const emails = await Email.find().sort({ createdAt: -1 });
     res.render('index', { emails, searchQuery: '' });
 });
 
@@ -115,12 +115,32 @@ app.get('/stats', isAuthenticated, async (req, res) => {
     const activeEmails = emails.filter(e => e.activeStatus === 'active').length;
     const inactiveEmails = emails.filter(e => e.activeStatus === 'inactive').length;
     const soldEmails = emails.filter(e => e.soldStatus === 'sold').length;
-    const notSoldEmails = emails.filter(e => e.soldStatus === 'not sold').length;
+    const notSoldEmails = emails.filter(e => e.soldStatus === 'not sold' && e.activeStatus === 'active').length;
+
+    // Calculate emails by year
     const years = emails.reduce((acc, { createdAt }) => {
         const year = new Date(createdAt).getFullYear();
         acc[year] = (acc[year] || 0) + 1;
         return acc;
     }, {});
+
+    // Prepare data for the chart
+    const emailStats = {
+        dates: [],
+        counts: []
+    };
+
+    const emailCountByDate = emails.reduce((acc, email) => {
+        const date = new Date(email.createdAt).toISOString().split('T')[0];
+        if (!acc[date]) acc[date] = 0;
+        acc[date]++;
+        return acc;
+    }, {});
+
+    for (const [date, count] of Object.entries(emailCountByDate)) {
+        emailStats.dates.push(date);
+        emailStats.counts.push(count);
+    }
 
     res.render('stats', {
         totalEmails,
@@ -128,7 +148,9 @@ app.get('/stats', isAuthenticated, async (req, res) => {
         inactiveEmails,
         soldEmails,
         notSoldEmails,
-        years
+        years,
+        emailStats,
+        searchQuery: '' // pass an empty search query
     });
 });
 
@@ -148,11 +170,12 @@ app.get('/stats/:year', isAuthenticated, async (req, res) => {
 app.get('/stats/:year/:month', isAuthenticated, async (req, res) => {
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
-    const emails = await Email.find();
-    const filteredEmails = emails.filter(e => {
-        const date = new Date(e.createdAt);
-        return date.getFullYear() === year && date.getMonth() + 1 === month;
-    });
+    const emails = await Email.find({
+        createdAt: {
+            $gte: new Date(year, month - 1, 1),
+            $lt: new Date(year, month, 1)
+        }
+    }).sort({ createdAt: -1 }); // Sort in descending order by createdAt
 
     res.render('monthStats', { year, month, emails });
 });
