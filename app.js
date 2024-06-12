@@ -5,7 +5,7 @@ const session = require('express-session');
 const app = express();
 
 // Replace with your MongoDB Atlas connection string
-const mongoURI = 'mongodb+srv://kleeladimin:balebale@ekidb.lczqgls.mongodb.net/?retryWrites=true&w=majority&appName=Ekidb';
+const mongoURI = '';
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
