@@ -6,23 +6,9 @@ body {
     padding: 0;
 }
 
-.container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-h1 {
-    text-align: center;
-    color: #4CAF50;
-}
-
 header.banner {
-    background-color: #f8f9fa;
-    padding: 10px;
+    background-color: #007bff;
+    padding: 5px 10px; /* Kurangi padding untuk memperkecil banner */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,69 +19,98 @@ header.banner {
     z-index: 1000;
 }
 
-header .logo {
+header .hamburger-menu {
     font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+header .logo {
+    font-size: 20px; /* Kurangi ukuran font logo */
     font-weight: bold;
+    color: white;
 }
 
-header .search-bar {
-    flex: 1;
-    text-align: center;
+header .nav-icons {
+margin-left: 80px;
+    display: flex;
+    align-items: flex-start; /* Pastikan elemen bisa bergeser ke bawah */
 }
 
-header .search-bar input {
-    width: 60%;
-    padding: 5px;
-}
-
-header .search-bar button {
-    padding: 5px 10px;
-}
-
-header .add-email a {
+header .nav-icons .add-email {
+    margin-left: -110px;
+    text-decoration: none;
     background-color: #28a745;
     color: white;
-    padding: 10px 15px;
+    width: 50px; /* Lebar elemen */
+    height: 50px; /* Tinggi elemen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Membuat background berbentuk lingkaran sempurna */
+    font-size: 24px; /* Ukuran font untuk memperbesar logo "+" */
+}
+header .nav-icons .search-toggle {
+text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
     border-radius: 50%;
-    text-decoration: none;
-    font-size: 24px;
+    align-items: center;
+    justify-content: center;
+font-size: 24px;
 }
 
-nav {
+.search-bar {
+    background-color: #f8f9fa;
+    padding: 10px;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding-top: 60px; /* Adjusted to ensure space for fixed header */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    margin-top: 60px; /* Tambahkan margin-top lebih besar */
 }
 
-nav a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav form {
+.search-bar form {
+    width: 100%;
+    max-width: 600px;
     display: flex;
-    gap: 10px;
+    justify-content: center;
 }
 
-nav input[type="text"] {
-    padding: 5px;
+.search-bar input {
+    width: 80%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-nav button {
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: #fff;
+.search-bar button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5px;
 }
 
-nav button:hover {
-    background-color: #45a049;
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+.container {
+    margin-top: 30px; /* Tambahkan margin-top lebih banyak untuk mendorong ke bawah */
+    padding: 20px;
+    width: 90%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 18px; /* Perbesar font untuk tampilan yang lebih besar */
 }
 
 .email-list {
@@ -113,7 +128,7 @@ nav button:hover {
 }
 
 .email-item a {
-    color: #4CAF50;
+    color: #007bff;
     text-decoration: none;
     margin-right: 10px;
 }
@@ -129,7 +144,7 @@ nav button:hover {
 .email-item button {
     padding: 5px 10px;
     background-color: #f44336;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -139,40 +154,42 @@ nav button:hover {
     background-color: #d32f2f;
 }
 
-.page-title {
+.sidebar {
+    background-color: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    display: none; /* Mulai dengan display none */
+}
+
+.sidebar .hamburger-menu {
+    background-color: #007bff; /* Warna biru untuk tab hamburger di sidebar */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.stats-cards {
+.sidebar nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 20px;
+    flex-direction: column;
 }
 
-.card {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    flex: 1 1 calc(33.333% - 20px);
-    min-width: 200px;
+.sidebar nav a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
 }
 
-.card h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-.chart-container {
-    margin-top: 40px;
-}
-
-.chart-container canvas {
-    width: 100%;
-    height: 400px;
+.sidebar nav a:hover {
+    background-color: #e9ecef;
 }

@@ -5,7 +5,7 @@ const session = require('express-session');
 const app = express();
 
 // Replace with your MongoDB Atlas connection string
-const mongoURI = '';
+const mongoURI = 'mongodb+srv://kleeladimin:balebale@ekidb.lczqgls.mongodb.net/?retryWrites=true&w=majority&appName=Ekidb';
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -182,9 +182,15 @@ app.get('/stats/:year/:month', isAuthenticated, async (req, res) => {
 
 app.get('/status/:status', isAuthenticated, async (req, res) => {
     const { status } = req.params;
-    const emails = await Email.find({ soldStatus: status });
+    const emails = await Email.find({ soldStatus: status, activeStatus: 'active' }).sort({ createdAt: -1 });
     res.render('index', { emails, searchQuery: '' });
 });
+
+app.get('/inactive', isAuthenticated, async (req, res) => {
+    const emails = await Email.find({ activeStatus: 'inactive' }).sort({ createdAt: -1 });
+    res.render('index', { emails, searchQuery: '' });
+});
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

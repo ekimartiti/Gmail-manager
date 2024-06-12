@@ -6,7 +6,7 @@
     <title>Stats</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/stat.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -25,12 +25,13 @@
                         <p class="card-text"><%= activeEmails %></p>
                     </div>
                 </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Inactive Emails</h5>
-                        <p class="card-text"><%= inactiveEmails %></p>
-                    </div>
-                </div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title"><a href="/status/inactive">Inactive Emails</a></h5>
+        <p class="card-text"><%= inactiveEmails %></p>
+    </div>
+</div>
+
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title"><a href="/status/sold">Sold Emails</a></h5>

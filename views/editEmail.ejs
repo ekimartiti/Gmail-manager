@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Email</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/addE.css">
     <script src="/js/scripts.js" defer></script>
 </head>
 <body>
@@ -14,6 +15,8 @@
             <input type="email" id="email" name="email" value="<%= email.email %>" readonly>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" value="<%= email.password %>" readonly>
+            <label for="createdAt">Created At:</label>
+            <input type="date" id="createdAt" name="createdAt" value="<%= email.createdAt %>" required>
             <label for="activeStatus">Active Status:</label>
             <select id="activeStatus" name="activeStatus">
                 <option value="active" <%= email.activeStatus === 'active' ? 'selected' : '' %>>Active</option>
@@ -21,8 +24,7 @@
             </select>
             <label for="soldStatus">Sold Status:</label>
             <select id="soldStatus" name="soldStatus">
-                <option value="sold" <%= email.soldStatus === 'sold' ? 'selected' : '' %>>
-Sold</option>
+                <option value="sold" <%= email.soldStatus === 'sold' ? 'selected' : '' %>>Sold</option>
                 <option value="not sold" <%= email.soldStatus === 'not sold' ? 'selected' : '' %>>Not Sold</option>
             </select>
             <label for="ekStatus">EK Status:</label>
