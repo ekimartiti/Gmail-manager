@@ -5,7 +5,7 @@ const session = require('express-session');
 const app = express();
 
 // Replace with your MongoDB Atlas connection string
-const mongoURI = '';
+const mongoURI = 'mongodb+srv://kleeladimin:balebale@ekidb.lczqgls.mongodb.net/?retryWrites=true&w=majority&appName=Ekidb';
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -72,7 +72,11 @@ app.get('/logout', (req, res) => {
 
 // Protected routes
 app.get('/', isAuthenticated, async (req, res) => {
-    const emails = await Email.find().sort({ createdAt: -1 });
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const emails = await Email.find({ createdAt: { $gte: startOfMonth } }).sort({ createdAt: -1 });
     res.render('index', { emails, searchQuery: '' });
 });
 
@@ -81,9 +85,14 @@ app.get('/add', isAuthenticated, (req, res) => {
 });
 
 app.post('/add', isAuthenticated, async (req, res) => {
-    const { email, password, createdAt, activeStatus, soldStatus, ekStatus } = req.body;
-    const newEmail = new Email({ email, password, createdAt, activeStatus, soldStatus, ekStatus });
-    await newEmail.save();
+    const { emails, password, createdAt, activeStatus, soldStatus, ekStatus } = req.body;
+    const emailList = emails.split('\n').map(email => email.trim()).filter(email => email);
+
+    for (const email of emailList) {
+        const newEmail = new Email({ email, password, createdAt, activeStatus, soldStatus, ekStatus });
+        await newEmail.save();
+    }
+
     res.redirect('/');
 });
 
@@ -191,6 +200,16 @@ app.get('/inactive', isAuthenticated, async (req, res) => {
     res.render('index', { emails, searchQuery: '' });
 });
 
+app.post('/sold/:email', isAuthenticated, async (req, res) => {
+    const { email } = req.params;
+    try {
+        await Email.findOneAndUpdate({ email }, { soldStatus: 'sold' });
+        res.redirect('/');
+    } catch (err) {
+        console.error('Error updating sold status:', err);
+        res.status(500).send('Error updating sold status');
+    }
+});
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

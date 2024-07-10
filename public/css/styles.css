@@ -193,3 +193,17 @@ font-size: 24px;
 .sidebar nav a:hover {
     background-color: #e9ecef;
 }
+
+/* Tambahkan di dalam styles.css */
+.email-item .btn-sold {
+    padding: 5px 10px;
+    background-color: #28a745; /* Warna hijau */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.email-item .btn-sold:hover {
+    background-color: #218838; /* Warna hijau yang sedikit lebih gelap saat dihover */
+}

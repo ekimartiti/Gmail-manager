@@ -34,17 +34,22 @@
                         <div><strong>Email:</strong> <%= email.email %></div>
                         <div><strong>Password:</strong> <%= email.password %></div>
                         <div><strong>Status:</strong> <%= email.activeStatus %>, <%= email.soldStatus %></div>
-                        <div><strong>Created At:</strong> <%= email.createdAt %></div>
+                        <div><strong>Created At:</strong> <%= new Date(email.createdAt).toLocaleDateString('en-GB') %></div>
                         <div><strong>EK Status:</strong> <%= email.ekStatus %></div>
                         <a href="/edit/<%= email.email %>">Edit</a>
                         <form action="/delete/<%= email.email %>" method="post" style="display:inline;">
                             <button type="submit">Delete</button>
                         </form>
+                        <% if (email.soldStatus === 'not sold') { %>
+                            <form action="/sold/<%= email.email %>" method="post" style="display:inline;">
+                                <button type="submit" class="btn-sold">Sold</button>
+                            </form>
+                        <% } %>
                     </li>
                 <% }) %>
             <% } else { %>
                 <li class="email-item">
-                    <div>No emails found.</div>
+                    <div>No emails found for this month.</div>
                 </li>
             <% } %>
         </ul>
