@@ -1,11 +1,12 @@
 const express = require('express');
+const fs = require('fs')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const app = express();
+let config = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 
-// Replace with your MongoDB Atlas connection string
-const mongoURI = 'mongodb+srv://kleeladimin:balebale@ekidb.lczqgls.mongodb.net/?retryWrites=true&w=majority&appName=Ekidb';
+const mongoURI = config.mongoKey
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
